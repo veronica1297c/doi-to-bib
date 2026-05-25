@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOI to BibTeX</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>DOI to BibTeX Converter</h1>
+
+        <p>
+            Paste one DOI per line using:
+        </p>
+
+        <pre>citation_key | doi</pre>
+
+        <textarea id="input" placeholder="franco2023 | 10.3390/cells13010037"></textarea>
+
+        <button onclick="generateBibtex()">
+            Generate .bib
+        </button>
+
+        <p id="status"></p>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

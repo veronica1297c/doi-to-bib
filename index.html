@@ -1,90 +1,47 @@
-<body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DOI to BibTeX</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>DOI to BibTeX</h1>
+          <p class="subtitle">citation-key | doi</p>
+        </div>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Switch to night mode" title="Switch to night mode">
+          <span aria-hidden="true" id="themeIcon">☾</span>
+        </button>
+      </header>
 
-<div class="container">
-<header>
+      <section class="workspace" aria-label="BibTeX generator">
+        <form class="input-pane" id="citationForm">
+          <label for="citationInput">Input</label>
+          <textarea id="citationInput" spellcheck="false" placeholder="measured09 | 10.1038/nphys1170"></textarea>
+          <div class="actions">
+            <button class="primary" type="submit">Generate</button>
+            <button class="secondary" id="clearButton" type="button">Clear</button>
+          </div>
+        </form>
 
-    <div>
-
-        <h1>📄 DOI to BibTeX Converter</h1>
-
-        <p class="subtitle">
-
-            Convert DOI lists into BibTeX entries for Overleaf and LaTeX.
-
-        </p>
-
-    </div>
-
-    <button
-
-        class="theme-toggle"
-
-        onclick="toggleTheme()">
-
-        🌙 Dark mode
-
-    </button>
-
-</header>
-
-    <div class="grid">
-
-        <section class="card">
-
-            <h2>Input DOIs</h2>
-
-            <p class="hint">
-                One DOI per line:
-            </p>
-
-            <pre>citation_key | doi</pre>
-
-            <textarea id="input"></textarea>
-
-<input
-    type="file"
-    id="fileInput"
-    accept=".txt"
-    style="margin-top:15px;"
->
-
-            <div class="button-row">
-
-                <button class="primary"
-                    onclick="generateBibtex()">
-                    Generate .bib
-                </button>
-
-                <button onclick="copyBibtex()">
-                    Copy
-                </button>
-
-                <button onclick="downloadCurrentBib()">
-                    Download
-                </button>
-
+        <section class="output-pane" aria-label="Generated BibTeX">
+          <div class="output-head">
+            <label for="bibtexOutput">BibTeX</label>
+            <div class="output-actions">
+              <button class="secondary" id="copyButton" type="button">Copy</button>
+              <button class="secondary" id="downloadButton" type="button">Download .bib</button>
             </div>
-
-            <p id="status"></p>
-
+          </div>
+          <textarea id="bibtexOutput" spellcheck="false" readonly></textarea>
+          <p class="status" id="statusText" role="status" aria-live="polite"></p>
         </section>
+      </section>
+    </main>
 
-        <section class="card">
-
-            <h2>Generated BibTeX</h2>
-
-            <textarea
-                id="output"
-                readonly
-                placeholder="Generated bibliography will appear here...">
-            </textarea>
-
-        </section>
-
-    </div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -98,9 +98,8 @@ async function generateBibtex() {
     document.getElementById("output").value =
         currentBibtex;
 
-    status.innerText =
-        "Done!";
-}
+    status.innerHTML =
+    `✅ Generated ${lines.length} entries`;
 
 
 async function copyBibtex() {

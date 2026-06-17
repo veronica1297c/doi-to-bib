@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DOI to BibTeX</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>DOI to BibTeX</h1>
+          <p class="subtitle">citation-key | doi</p>
+        </div>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Switch to night mode" title="Switch to night mode">
+          <span aria-hidden="true" id="themeIcon">☾</span>
+        </button>
+      </header>
+
+      <section class="workspace" aria-label="BibTeX generator">
+        <form class="input-pane" id="citationForm">
+          <label for="citationInput">Input</label>
+          <textarea id="citationInput" spellcheck="false" placeholder="measured09 | 10.1038/nphys1170"></textarea>
+          <div class="actions">
+            <button class="primary" type="submit">Generate</button>
+            <button class="secondary" id="clearButton" type="button">Clear</button>
+          </div>
+        </form>
+
+        <section class="output-pane" aria-label="Generated BibTeX">
+          <div class="output-head">
+            <label for="bibtexOutput">BibTeX</label>
+            <div class="output-actions">
+              <button class="secondary" id="copyButton" type="button">Copy</button>
+              <button class="secondary" id="downloadButton" type="button">Download .bib</button>
+            </div>
+          </div>
+          <textarea id="bibtexOutput" spellcheck="false" readonly></textarea>
+          <p class="status" id="statusText" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

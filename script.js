@@ -1,3 +1,6 @@
+let currentBibtex = "";
+
+
 async function fetchBibtex(doi) {
 
     const url =
@@ -90,17 +93,47 @@ async function generateBibtex() {
         }
     }
 
-    downloadBibFile(output);
+    currentBibtex = output;
+
+    document.getElementById("output").value =
+        currentBibtex;
 
     status.innerText =
         "Done!";
 }
 
 
-function downloadBibFile(content) {
+async function copyBibtex() {
+
+    if (!currentBibtex) {
+        alert("No bibliography generated yet.");
+        return;
+    }
+
+    try {
+
+        await navigator.clipboard.writeText(
+            currentBibtex
+        );
+
+        alert("Copied to clipboard!");
+
+    } catch (err) {
+
+        alert("Failed to copy.");
+    }
+}
+
+
+function downloadCurrentBib() {
+
+    if (!currentBibtex) {
+        alert("No bibliography generated yet.");
+        return;
+    }
 
     const blob =
-        new Blob([content],
+        new Blob([currentBibtex],
         { type: "text/plain" });
 
     const url =

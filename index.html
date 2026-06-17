@@ -1,40 +1,70 @@
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>DOI to BibTeX Converter</h1>
+    <header>
+        <h1>📄 DOI to BibTeX Converter</h1>
 
-        <p>
-            Paste one DOI per line using:
+        <p class="subtitle">
+            Convert DOI lists into BibTeX entries for Overleaf and LaTeX.
         </p>
+    </header>
 
-        <pre>citation_key | doi</pre>
+    <div class="grid">
 
-        <textarea
-            id="input"
-            placeholder="franco2023 | 10.3390/cells13010037">
-        </textarea>
+        <section class="card">
 
-        <button onclick="generateBibtex()">
-            Generate .bib
-        </button>
+            <h2>Input DOIs</h2>
 
-        <button onclick="copyBibtex()">
-            Copy to Clipboard
-        </button>
+            <p class="hint">
+                One DOI per line:
+            </p>
 
-        <button onclick="downloadCurrentBib()">
-            Download .bib
-        </button>
+            <pre>citation_key | doi</pre>
 
-        <p id="status"></p>
+            <textarea
+                id="input"
+                placeholder="franco2023 | 10.3390/cells13010037
+smith2022 | https://doi.org/10.xxxx/yyyy">
+            </textarea>
 
-        <h2>Generated BibTeX</h2>
+            <div class="button-row">
 
-        <textarea id="output" readonly></textarea>
+                <button class="primary"
+                    onclick="generateBibtex()">
+                    Generate .bib
+                </button>
+
+                <button onclick="copyBibtex()">
+                    Copy
+                </button>
+
+                <button onclick="downloadCurrentBib()">
+                    Download
+                </button>
+
+            </div>
+
+            <p id="status"></p>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Generated BibTeX</h2>
+
+            <textarea
+                id="output"
+                readonly
+                placeholder="Generated bibliography will appear here...">
+            </textarea>
+
+        </section>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 
 </body>

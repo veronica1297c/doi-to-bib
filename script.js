@@ -1,5 +1,71 @@
-let currentBibtex = "";
+function toggleTheme() {
 
+    const button =
+        document.querySelector(".theme-toggle");
+
+    const current =
+        document.documentElement.getAttribute(
+            "data-theme"
+        );
+
+    if (current === "dark") {
+
+        document.documentElement.removeAttribute(
+            "data-theme"
+        );
+
+        localStorage.setItem(
+            "theme",
+            "light"
+        );
+
+        if (button) {
+            button.innerText =
+                "🌙 Dark mode";
+        }
+
+    } else {
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            "dark"
+        );
+
+        localStorage.setItem(
+            "theme",
+            "dark"
+        );
+
+        if (button) {
+            button.innerText =
+                "☀️ Light mode";
+        }
+    }
+}
+
+window.addEventListener("load", () => {
+
+    const saved =
+        localStorage.getItem("theme");
+
+    const button =
+        document.querySelector(".theme-toggle");
+
+    if (saved === "dark") {
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            "dark"
+        );
+
+        if (button) {
+            button.innerText =
+                "☀️ Light mode";
+        }
+    }
+});
+
+let currentBibtex = "";
 
 async function fetchBibtex(doi) {
 
@@ -19,7 +85,6 @@ async function fetchBibtex(doi) {
     return await response.text();
 }
 
-
 function cleanDOI(raw) {
 
     return raw
@@ -28,7 +93,6 @@ function cleanDOI(raw) {
         .trim();
 }
 
-
 function replaceCitationKey(bibtex, newKey) {
 
     return bibtex.replace(
@@ -36,7 +100,6 @@ function replaceCitationKey(bibtex, newKey) {
         `@$1{${newKey},`
     );
 }
-
 
 async function generateBibtex() {
 
@@ -48,10 +111,13 @@ async function generateBibtex() {
 
     let output = "";
 
+    let successCount = 0;
+
     const status =
         document.getElementById("status");
 
-    status.innerText = "Generating...";
+    status.innerText =
+        "⏳ Generating bibliography...";
 
     for (const line of lines) {
 
@@ -82,7 +148,10 @@ async function generateBibtex() {
                     citationKey
                 );
 
-            output += bibtex + "\n\n";
+            output +=
+                bibtex + "\n\n";
+
+            successCount++;
 
         } catch (error) {
 
@@ -99,13 +168,17 @@ async function generateBibtex() {
         currentBibtex;
 
     status.innerHTML =
-    `✅ Generated ${lines.length} entries`;}
-
+        `✅ Generated ${successCount} entr${successCount === 1 ? "y" : "ies"}`;
+}
 
 async function copyBibtex() {
 
     if (!currentBibtex) {
-        alert("No bibliography generated yet.");
+
+        alert(
+            "No bibliography generated yet."
+        );
+
         return;
     }
 
@@ -115,7 +188,11 @@ async function copyBibtex() {
             currentBibtex
         );
 
-        alert("Copied to clipboard!");
+        const status =
+            document.getElementById("status");
+
+        status.innerHTML =
+            "📋 Copied to clipboard!";
 
     } catch (err) {
 
@@ -123,17 +200,22 @@ async function copyBibtex() {
     }
 }
 
-
 function downloadCurrentBib() {
 
     if (!currentBibtex) {
-        alert("No bibliography generated yet.");
+
+        alert(
+            "No bibliography generated yet."
+        );
+
         return;
     }
 
     const blob =
-        new Blob([currentBibtex],
-        { type: "text/plain" });
+        new Blob(
+            [currentBibtex],
+            { type: "text/plain" }
+        );
 
     const url =
         URL.createObjectURL(blob);
@@ -142,57 +224,15 @@ function downloadCurrentBib() {
         document.createElement("a");
 
     a.href = url;
-
     a.download = "references.bib";
 
     a.click();
 
     URL.revokeObjectURL(url);
+
+    const status =
+        document.getElementById("status");
+
+    status.innerHTML =
+        "💾 Bibliography downloaded";
 }
-
-
-function toggleTheme() {
-
-    const current =
-        document.documentElement.getAttribute(
-            "data-theme"
-        );
-
-    if (current === "dark") {
-
-        document.documentElement.removeAttribute(
-            "data-theme"
-        );
-
-        localStorage.setItem(
-            "theme",
-            "light"
-        );
-
-    } else {
-
-        document.documentElement.setAttribute(
-            "data-theme",
-            "dark"
-        );
-
-        localStorage.setItem(
-            "theme",
-            "dark"
-        );
-    }
-}
-
-window.addEventListener("load", () => {
-
-    const saved =
-        localStorage.getItem("theme");
-
-    if (saved === "dark") {
-
-        document.documentElement.setAttribute(
-            "data-theme",
-            "dark"
-        );
-    }
-});

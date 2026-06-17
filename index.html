@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOI to BibTeX</title>
-
-    <link rel="stylesheet" href="style.css">
-</head>
 <body>
 
     <div class="container">
@@ -19,17 +10,31 @@
 
         <pre>citation_key | doi</pre>
 
-        <textarea id="input" placeholder="franco2023 | 10.3390/cells13010037"></textarea>
+        <textarea
+            id="input"
+            placeholder="franco2023 | 10.3390/cells13010037">
+        </textarea>
 
         <button onclick="generateBibtex()">
             Generate .bib
         </button>
 
+        <button onclick="copyBibtex()">
+            Copy to Clipboard
+        </button>
+
+        <button onclick="downloadCurrentBib()">
+            Download .bib
+        </button>
+
         <p id="status"></p>
+
+        <h2>Generated BibTeX</h2>
+
+        <textarea id="output" readonly></textarea>
 
     </div>
 
     <script src="script.js"></script>
 
 </body>
-</html>

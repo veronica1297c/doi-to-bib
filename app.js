@@ -50,7 +50,9 @@ function normalizeDoi(value) {
 }
 
 function replaceBibtexKey(bibtex, key) {
-  return bibtex.replace(/^(@\w+\s*\{\s*)[^,\s]+/i, `$1${key}`).trim();
+  const trimmed = bibtex.trim();
+  const replaced = trimmed.replace(/^(@\w+\s*\{\s*)[^,]+/i, `$1${key}`);
+  return replaced === trimmed ? trimmed : replaced;
 }
 
 function splitTopLevelFields(value) {
@@ -74,13 +76,13 @@ function splitTopLevelFields(value) {
   return fields;
 }
 
-function prettyPrintBibtex(bibtex) {
+function prettyPrintBibtex(bibtex, citationKey) {
   const trimmed = bibtex.trim();
   const header = trimmed.match(/^@(\w+)\s*\{\s*([^,]+)\s*,/);
   if (!header) return trimmed;
 
   const type = header[1];
-  const key = header[2].trim();
+  const key = citationKey || header[2].trim();
   const start = header[0].length;
   const end = trimmed.lastIndexOf("}");
   if (end === -1 || end <= start) return trimmed;
@@ -118,7 +120,7 @@ async function fetchBibtex({ key, doi }) {
     throw new Error(`${key}: Crossref did not return BibTeX`);
   }
 
-  return prettyPrintBibtex(replaceBibtexKey(bibtex, key));
+  return prettyPrintBibtex(replaceBibtexKey(bibtex, key), key);
 }
 
 async function generateBibtex(event) {
